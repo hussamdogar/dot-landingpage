@@ -1,0 +1,53 @@
+{
+  "name": "Tech Rig Compliance - DOT Compliance Guidance",
+  "short_name": "Tech Rig",
+  "description": "Professional DOT compliance consulting and MC Authority guidance for trucking companies",
+  "start_url": "/?utm_source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48 32x32 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities", "finance"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "DOT Compliance Help",
+      "url": "/?service=dot",
+      "description": "Get DOT compliance guidance"
+    },
+    {
+      "name": "MC Authority",
+      "url": "/?service=mc",
+      "description": "Get MC Authority assistance"
+    }
+  ],
+  "lang": "en-US",
+  "dir": "ltr",
+  "prefer_related_applications": false
+}

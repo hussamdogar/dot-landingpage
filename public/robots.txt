@@ -1,0 +1,54 @@
+# Robots.txt for Tech Rig Compliance
+# Allow all bots full access for better SEO and Google Ads Quality Score
+
+# Google Bots - Full Access
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Google Ads Bot - Full Access for Quality Score
+User-agent: AdsBot-Google
+Allow: /
+Crawl-delay: 0
+
+# Google Mobile Bots
+User-agent: AdsBot-Google-Mobile
+Allow: /
+Crawl-delay: 0
+
+# Google Image Bot
+User-agent: Googlebot-Image
+Allow: /
+
+# Google AdSense Bot
+User-agent: Mediapartners-Google
+Allow: /
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# All Other Bots
+User-agent: *
+Allow: /
+Crawl-delay: 1
+
+# Sitemap Location
+Sitemap: https://techrig.org/sitemap.xml
+Sitemap: https://techrig.org/sitemap-0.xml
+
+# Important pages for crawling
+# Homepage
+Allow: /$
+# Policy pages
+Allow: /privacy-policy
+Allow: /terms-of-service
+Allow: /refund-policy
+
+# Block admin or sensitive paths if any exist
+# Disallow: /admin/
+# Disallow: /api/
+
+# Host directive (for Yandex)
+Host: https://techrig.org
