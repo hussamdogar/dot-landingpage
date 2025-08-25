@@ -1,11 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import biginClient from '@/lib/bigin'
 
 // Function to generate customer reference number
 function generateCustomerReference(): string {
   const timestamp = Date.now().toString().slice(-8)
   const random = Math.random().toString(36).substring(2, 5).toUpperCase()
   return `TRC${timestamp}${random}`
+}
+
+// Function to split full name into first and last name
+function splitFullName(fullName: string): { firstName: string; lastName: string } {
+  const parts = fullName.trim().split(' ')
+  const firstName = parts[0] || ''
+  const lastName = parts.slice(1).join(' ') || parts[0] || 'N/A'
+  return { firstName, lastName }
 }
 
 export async function POST(request: NextRequest) {
@@ -65,7 +74,35 @@ export async function POST(request: NextRequest) {
           )
         }
         
-        console.log('Lead saved successfully (retry):', retryData)
+        console.log('Lead saved successfully (retry) to Supabase:', retryData)
+        
+        // Create lead in Bigin CRM for retry case
+        try {
+          const { firstName, lastName } = splitFullName(fullName)
+          
+          const biginLead = await biginClient.createLead({
+            First_Name: firstName,
+            Last_Name: lastName,
+            Email: email,
+            Phone: phone,
+            Lead_Source: 'Website - Landing Page',
+            Description: `Lead from Tech Rig Compliance landing page. Customer Reference: ${retryData.customer_reference}`
+          })
+
+          console.log('Lead created in Bigin (retry):', biginLead)
+
+          if (biginLead && biginLead.id) {
+            await supabaseAdmin
+              .from('registrations')
+              .update({ bigin_lead_id: biginLead.id })
+              .eq('id', retryData.id)
+            
+            console.log('Updated Supabase record with Bigin lead ID (retry)')
+          }
+        } catch (biginError) {
+          console.error('Failed to create Bigin lead in retry (non-fatal):', biginError)
+        }
+        
         return NextResponse.json(
           { 
             message: 'Lead submitted successfully',
@@ -82,7 +119,36 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log('Lead saved successfully:', data)
+    console.log('Lead saved successfully to Supabase:', data)
+
+    // Now create lead in Bigin CRM
+    try {
+      const { firstName, lastName } = splitFullName(fullName)
+      
+      const biginLead = await biginClient.createLead({
+        First_Name: firstName,
+        Last_Name: lastName,
+        Email: email,
+        Phone: phone,
+        Lead_Source: 'Website - Landing Page',
+        Description: `Lead from Tech Rig Compliance landing page. Customer Reference: ${data.customer_reference}`
+      })
+
+      console.log('Lead created in Bigin:', biginLead)
+
+      // Update Supabase record with Bigin lead ID
+      if (biginLead && biginLead.id) {
+        await supabaseAdmin
+          .from('registrations')
+          .update({ bigin_lead_id: biginLead.id })
+          .eq('id', data.id)
+        
+        console.log('Updated Supabase record with Bigin lead ID')
+      }
+    } catch (biginError) {
+      // Don't fail the whole request if Bigin fails
+      console.error('Failed to create Bigin lead (non-fatal):', biginError)
+    }
 
     return NextResponse.json(
       { 

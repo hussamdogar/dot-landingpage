@@ -41,7 +41,7 @@ export default function Testimonials() {
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">What Our Clients Say</h2>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Don't just take our word for it. See what industry leaders say about our compliance solutions.
+            Don&apos;t just take our word for it. See what industry leaders say about our compliance solutions.
           </p>
         </div>
 
@@ -57,7 +57,7 @@ export default function Testimonials() {
                   ))}
                 </div>
                 <blockquote className="text-card-foreground mb-4 text-base md:text-lg leading-relaxed">
-                  "{testimonial.content}"
+                  &quot;{testimonial.content}&quot;
                 </blockquote>
                 <div className="flex items-center">
                   <img 

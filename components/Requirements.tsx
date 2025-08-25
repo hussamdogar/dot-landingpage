@@ -40,11 +40,11 @@ export default function Requirements() {
           {/* Header */}
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              What You'll Need to Get Started
+              What You&apos;ll Need to Get Started
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
               Have these documents and information ready for a smooth application process. 
-              Don't worry if you're missing something — we'll help you gather what's needed.
+              Don&apos;t worry if you&apos;re missing something — we&apos;ll help you gather what&apos;s needed.
             </p>
           </div>
 
@@ -86,7 +86,7 @@ export default function Requirements() {
             </h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
               Our compliance experts will guide you through gathering any missing information 
-              and help you understand exactly what's needed for your specific situation.
+              and help you understand exactly what&apos;s needed for your specific situation.
             </p>
             <a href="tel:+19179092257">
               <button className="bg-accent text-accent-foreground hover:bg-accent hover:brightness-125 px-8 py-3 font-semibold shadow-lg border border-accent/30 rounded-xl transition-all duration-200 transform hover:-translate-y-0.5 inline-flex items-center gap-2">

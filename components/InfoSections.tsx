@@ -136,7 +136,7 @@ export default function InfoSections() {
         {/* CTA Section */}
         <div className="text-center mt-12">
           <p className="text-lg text-muted-foreground mb-6">
-            USDOT compliance doesn't have to be complicated. We've simplified the entire process into one streamlined consultation that identifies your exact requirements and handles all the complex paperwork for you.
+            USDOT compliance doesn&apos;t have to be complicated. We&apos;ve simplified the entire process into one streamlined consultation that identifies your exact requirements and handles all the complex paperwork for you.
           </p>
           <a href="tel:+19179092257">
             <button className="bg-accent text-accent-foreground hover:bg-accent hover:brightness-125 text-lg px-8 py-4 font-semibold shadow-2xl border border-accent/30 rounded-xl transition-all duration-200 transform hover:-translate-y-0.5 inline-flex items-center gap-2">

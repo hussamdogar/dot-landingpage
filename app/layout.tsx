@@ -71,7 +71,6 @@ export const metadata: Metadata = {
   verification: {
     google: "qmk9CNfwU_cMmTo4FaNq89hz9Tghwqk99mAyd0hxKIg",
     yandex: "yandex-verification-code", // Optional - replace if you have Yandex
-    bing: "bing-verification-code", // Optional - replace if you have Bing Webmaster
   },
   category: "business",
 }
