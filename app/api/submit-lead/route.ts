@@ -17,6 +17,46 @@ function splitFullName(fullName: string): { firstName: string; lastName: string 
   return { firstName, lastName }
 }
 
+// Function to get location from IP
+async function getLocationFromIP(request: NextRequest): Promise<{ city: string | null; state: string | null }> {
+  try {
+    // First try Vercel headers
+    const city = request.headers.get('x-vercel-ip-city')
+    const region = request.headers.get('x-vercel-ip-region')
+    
+    if (city && region) {
+      return { city: decodeURIComponent(city), state: decodeURIComponent(region) }
+    }
+    
+    // Fallback to IP geolocation API
+    // Get client IP
+    const forwardedFor = request.headers.get('x-forwarded-for')
+    const realIP = request.headers.get('x-real-ip')
+    const ip = forwardedFor?.split(',')[0] || realIP || 'unknown'
+    
+    // Skip for localhost
+    if (ip === 'unknown' || ip.includes('127.0.0.1') || ip.includes('::1')) {
+      return { city: null, state: null }
+    }
+    
+    // Use ip-api.com (free, no key required)
+    const geoResponse = await fetch(`http://ip-api.com/json/${ip}`)
+    if (geoResponse.ok) {
+      const geoData = await geoResponse.json()
+      if (geoData.status === 'success') {
+        return { 
+          city: geoData.city || null, 
+          state: geoData.regionName || null 
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error getting location:', error)
+  }
+  
+  return { city: null, state: null }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -29,6 +69,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Get location data
+    const { city, state } = await getLocationFromIP(request)
+    
     // Generate a unique customer reference
     const customerReference = generateCustomerReference()
 
@@ -41,7 +84,9 @@ export async function POST(request: NextRequest) {
         phone: phone,
         customer_reference: customerReference,
         lead_started_at: new Date().toISOString(),
-        stripe_payment_status: 'pending'
+        stripe_payment_status: 'pending',
+        principal_city: city,
+        principal_state: state
       })
       .select()
       .single()
@@ -61,7 +106,9 @@ export async function POST(request: NextRequest) {
             phone: phone,
             customer_reference: newCustomerReference,
             lead_started_at: new Date().toISOString(),
-            stripe_payment_status: 'pending'
+            stripe_payment_status: 'pending',
+            principal_city: city,
+            principal_state: state
           })
           .select()
           .single()
@@ -80,6 +127,7 @@ export async function POST(request: NextRequest) {
         try {
           const { firstName, lastName } = splitFullName(fullName)
           
+          const locationInfo = city && state ? ` | Location: ${city}, ${state}` : ''
           const biginContact = await biginClient.createContact({
             First_Name: firstName,
             Last_Name: lastName,
@@ -87,7 +135,7 @@ export async function POST(request: NextRequest) {
             Phone: phone,
             Lead_Source: 'Website - Landing Page',
             'Reference id': retryData.customer_reference,
-            Description: `New lead from landing page`
+            Description: `New lead from landing page${locationInfo}`
           })
 
           console.log('Contact created in Bigin (retry):', biginContact)
@@ -126,6 +174,7 @@ export async function POST(request: NextRequest) {
     try {
       const { firstName, lastName } = splitFullName(fullName)
       
+      const locationInfo = city && state ? ` | Location: ${city}, ${state}` : ''
       const biginContact = await biginClient.createContact({
         First_Name: firstName,
         Last_Name: lastName,
@@ -133,7 +182,7 @@ export async function POST(request: NextRequest) {
         Phone: phone,
         Lead_Source: 'Website - Landing Page',
         'Reference id': data.customer_reference,
-        Description: `Contact from Tech Rig Compliance landing page`
+        Description: `Contact from Tech Rig Compliance landing page${locationInfo}`
       })
 
       console.log('Contact created in Bigin:', biginContact)
