@@ -127,7 +127,6 @@ export async function POST(request: NextRequest) {
         try {
           const { firstName, lastName } = splitFullName(fullName)
           
-          const locationInfo = city && state ? ` | Location: ${city}, ${state}` : ''
           const biginContact = await biginClient.createContact({
             First_Name: firstName,
             Last_Name: lastName,
@@ -135,7 +134,9 @@ export async function POST(request: NextRequest) {
             Phone: phone,
             Lead_Source: 'Website - Landing Page',
             'Reference id': retryData.customer_reference,
-            Description: `New lead from landing page${locationInfo}`
+            'Mailing City': city || '',
+            'Mailing State': state || '',
+            Description: `New lead from landing page`
           })
 
           console.log('Contact created in Bigin (retry):', biginContact)
@@ -174,7 +175,6 @@ export async function POST(request: NextRequest) {
     try {
       const { firstName, lastName } = splitFullName(fullName)
       
-      const locationInfo = city && state ? ` | Location: ${city}, ${state}` : ''
       const biginContact = await biginClient.createContact({
         First_Name: firstName,
         Last_Name: lastName,
@@ -182,7 +182,9 @@ export async function POST(request: NextRequest) {
         Phone: phone,
         Lead_Source: 'Website - Landing Page',
         'Reference id': data.customer_reference,
-        Description: `Contact from Tech Rig Compliance landing page${locationInfo}`
+        'Mailing City': city || '',
+        'Mailing State': state || '',
+        Description: `Contact from Tech Rig Compliance landing page`
       })
 
       console.log('Contact created in Bigin:', biginContact)
