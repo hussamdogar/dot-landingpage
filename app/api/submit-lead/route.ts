@@ -86,7 +86,8 @@ export async function POST(request: NextRequest) {
             Email: email,
             Phone: phone,
             Lead_Source: 'Website - Landing Page',
-            Description: `Contact from Tech Rig Compliance landing page. Customer Reference: ${retryData.customer_reference}`
+            Reference_id: retryData.customer_reference,
+            Description: `Contact from Tech Rig Compliance landing page`
           })
 
           console.log('Contact created in Bigin (retry):', biginContact)
@@ -131,7 +132,8 @@ export async function POST(request: NextRequest) {
         Email: email,
         Phone: phone,
         Lead_Source: 'Website - Landing Page',
-        Description: `Contact from Tech Rig Compliance landing page. Customer Reference: ${data.customer_reference}`
+        Reference_id: data.customer_reference,
+        Description: `Contact from Tech Rig Compliance landing page`
       })
 
       console.log('Contact created in Bigin:', biginContact)

@@ -12,6 +12,7 @@ interface BiginContact {
   Phone: string;
   Lead_Source?: string;
   Description?: string;
+  Reference_id?: string;
 }
 
 class BiginClient {
