@@ -76,31 +76,31 @@ export async function POST(request: NextRequest) {
         
         console.log('Lead saved successfully (retry) to Supabase:', retryData)
         
-        // Create lead in Bigin CRM for retry case
+        // Create contact in Bigin CRM for retry case
         try {
           const { firstName, lastName } = splitFullName(fullName)
           
-          const biginLead = await biginClient.createLead({
+          const biginContact = await biginClient.createContact({
             First_Name: firstName,
             Last_Name: lastName,
             Email: email,
             Phone: phone,
             Lead_Source: 'Website - Landing Page',
-            Description: `Lead from Tech Rig Compliance landing page. Customer Reference: ${retryData.customer_reference}`
+            Description: `Contact from Tech Rig Compliance landing page. Customer Reference: ${retryData.customer_reference}`
           })
 
-          console.log('Lead created in Bigin (retry):', biginLead)
+          console.log('Contact created in Bigin (retry):', biginContact)
 
-          if (biginLead && biginLead.id) {
+          if (biginContact && biginContact.id) {
             await supabaseAdmin
               .from('registrations')
-              .update({ bigin_lead_id: biginLead.id })
+              .update({ bigin_lead_id: biginContact.id })
               .eq('id', retryData.id)
             
-            console.log('Updated Supabase record with Bigin lead ID (retry)')
+            console.log('Updated Supabase record with Bigin contact ID (retry)')
           }
         } catch (biginError) {
-          console.error('Failed to create Bigin lead in retry (non-fatal):', biginError)
+          console.error('Failed to create Bigin contact in retry (non-fatal):', biginError)
         }
         
         return NextResponse.json(
@@ -121,33 +121,33 @@ export async function POST(request: NextRequest) {
 
     console.log('Lead saved successfully to Supabase:', data)
 
-    // Now create lead in Bigin CRM
+    // Now create contact in Bigin CRM
     try {
       const { firstName, lastName } = splitFullName(fullName)
       
-      const biginLead = await biginClient.createLead({
+      const biginContact = await biginClient.createContact({
         First_Name: firstName,
         Last_Name: lastName,
         Email: email,
         Phone: phone,
         Lead_Source: 'Website - Landing Page',
-        Description: `Lead from Tech Rig Compliance landing page. Customer Reference: ${data.customer_reference}`
+        Description: `Contact from Tech Rig Compliance landing page. Customer Reference: ${data.customer_reference}`
       })
 
-      console.log('Lead created in Bigin:', biginLead)
+      console.log('Contact created in Bigin:', biginContact)
 
-      // Update Supabase record with Bigin lead ID
-      if (biginLead && biginLead.id) {
+      // Update Supabase record with Bigin contact ID
+      if (biginContact && biginContact.id) {
         await supabaseAdmin
           .from('registrations')
-          .update({ bigin_lead_id: biginLead.id })
+          .update({ bigin_lead_id: biginContact.id })
           .eq('id', data.id)
         
-        console.log('Updated Supabase record with Bigin lead ID')
+        console.log('Updated Supabase record with Bigin contact ID')
       }
     } catch (biginError) {
       // Don't fail the whole request if Bigin fails
-      console.error('Failed to create Bigin lead (non-fatal):', biginError)
+      console.error('Failed to create Bigin contact (non-fatal):', biginError)
     }
 
     return NextResponse.json(

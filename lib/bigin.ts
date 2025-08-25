@@ -5,7 +5,7 @@ interface BiginTokenResponse {
   expires_in: number;
 }
 
-interface BiginLead {
+interface BiginContact {
   First_Name?: string;
   Last_Name: string;
   Email: string;
@@ -54,14 +54,14 @@ class BiginClient {
     return this.accessToken;
   }
 
-  async createLead(leadData: BiginLead): Promise<any> {
+  async createContact(contactData: BiginContact): Promise<any> {
     const accessToken = await this.getAccessToken();
     
     const requestBody = {
-      data: [leadData]
+      data: [contactData]
     };
 
-    const response = await fetch(`${process.env.BIGIN_API_DOMAIN}/crm/v2/Leads`, {
+    const response = await fetch(`${process.env.BIGIN_API_DOMAIN}/crm/v2/Contacts`, {
       method: 'POST',
       headers: {
         'Authorization': `Zoho-oauthtoken ${accessToken}`,
@@ -72,7 +72,7 @@ class BiginClient {
 
     if (!response.ok) {
       const error = await response.text();
-      throw new Error(`Failed to create Bigin lead: ${error}`);
+      throw new Error(`Failed to create Bigin contact: ${error}`);
     }
 
     const result = await response.json();
