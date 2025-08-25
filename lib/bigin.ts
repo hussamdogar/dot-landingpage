@@ -61,7 +61,7 @@ class BiginClient {
       data: [contactData]
     };
 
-    const response = await fetch(`${process.env.BIGIN_API_DOMAIN}/crm/v2/Contacts`, {
+    const response = await fetch(`${process.env.BIGIN_API_DOMAIN}/bigin/v2/Contacts`, {
       method: 'POST',
       headers: {
         'Authorization': `Zoho-oauthtoken ${accessToken}`,
