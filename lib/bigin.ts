@@ -26,7 +26,8 @@ class BiginClient {
       grant_type: 'refresh_token'
     });
 
-    const response = await fetch(`${process.env.BIGIN_API_DOMAIN}/oauth/v2/token`, {
+    // Use accounts.zoho.com for OAuth, not the API domain
+    const response = await fetch(`https://accounts.zoho.com/oauth/v2/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
