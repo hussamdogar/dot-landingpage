@@ -134,8 +134,8 @@ export async function POST(request: NextRequest) {
             Phone: phone,
             Lead_Source: 'Website - Landing Page',
             'Reference id': retryData.customer_reference,
-            'Mailing City': city || '',
-            'Mailing State': state || '',
+            Mailing_City: city || '',
+            Mailing_State: state || '',
             Description: `New lead from landing page`
           })
 
@@ -182,8 +182,8 @@ export async function POST(request: NextRequest) {
         Phone: phone,
         Lead_Source: 'Website - Landing Page',
         'Reference id': data.customer_reference,
-        'Mailing City': city || '',
-        'Mailing State': state || '',
+        Mailing_City: city || '',
+        Mailing_State: state || '',
         Description: `Contact from Tech Rig Compliance landing page`
       })
 

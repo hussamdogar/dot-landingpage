@@ -13,8 +13,8 @@ interface BiginContact {
   Lead_Source?: string;
   Description?: string;
   'Reference id'?: string;  // Using exact field name with space
-  'Mailing City'?: string;
-  'Mailing State'?: string;
+  Mailing_City?: string;
+  Mailing_State?: string;
 }
 
 class BiginClient {
