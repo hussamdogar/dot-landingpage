@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
             Phone: phone,
             Lead_Source: 'Website - Landing Page',
             'Reference id': retryData.customer_reference,
-            Description: `Contact from Tech Rig Compliance landing page`
+            Description: `New lead from landing page`
           })
 
           console.log('Contact created in Bigin (retry):', biginContact)
