@@ -12,7 +12,7 @@ interface BiginContact {
   Phone: string;
   Lead_Source?: string;
   Description?: string;
-  Reference_id?: string;
+  'Reference id'?: string;  // Using exact field name with space
 }
 
 class BiginClient {

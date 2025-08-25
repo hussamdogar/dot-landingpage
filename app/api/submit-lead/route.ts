@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
             Email: email,
             Phone: phone,
             Lead_Source: 'Website - Landing Page',
-            Reference_id: retryData.customer_reference,
+            'Reference id': retryData.customer_reference,
             Description: `Contact from Tech Rig Compliance landing page`
           })
 
@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
         Email: email,
         Phone: phone,
         Lead_Source: 'Website - Landing Page',
-        Reference_id: data.customer_reference,
+        'Reference id': data.customer_reference,
         Description: `Contact from Tech Rig Compliance landing page`
       })
 
